@@ -21,7 +21,7 @@ if ($q) {
         $html = file_get_contents($file);
 
         preg_match_all('/href="\/title\/(tt\d+)\/[^"]*"[^>]*aria-label="View title page for ([^"]+)"/', $html, $titleMatches);
-        preg_match_all('/src="(https:\/\/m\.media-amazon\.com\/images\/M\/[^" <]+)"/', $html, $imgMatches);
+        preg_match_all('/src="(https:\/\/m\.media-amazon\.com\/images\/M\/[^ "]+)/', $html, $imgMatches);
 
         $ids    = $titleMatches[1];
         $titles = $titleMatches[2];

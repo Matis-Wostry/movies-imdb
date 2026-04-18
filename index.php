@@ -61,5 +61,7 @@ $movies = $pdo->query('SELECT id, title, image, rating, date FROM movies ORDER B
 
 </main>
 
+<?php require '_local_films.php'; ?>
+
 </body>
 </html>
