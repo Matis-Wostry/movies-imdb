@@ -19,9 +19,11 @@ $movies = $pdo->query('SELECT id, title, image, rating, date FROM movies ORDER B
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
 
-<main class="max-w-4xl mx-auto px-6 py-16">
+<?php require '_header.php'; ?>
 
-    <h1 class="text-2xl font-semibold mb-10">Ma collection</h1>
+<main class="max-w-4xl mx-auto px-6 py-12">
+
+    <h2 class="text-base font-semibold mb-8">Ma collection</h2>
 
     <?php if (empty($movies)) { ?>
         <p class="text-gray-400 text-sm">Aucun film en base. Visitez une page détail pour en ajouter.</p>
@@ -36,7 +38,6 @@ $movies = $pdo->query('SELECT id, title, image, rating, date FROM movies ORDER B
                     <?php } else { ?>
                         <div class="w-full aspect-[2/3] bg-gray-100 rounded-lg"></div>
                     <?php } ?>
-
                     <div class="mt-2">
                         <p class="text-sm font-medium leading-tight"><?= htmlspecialchars($film['title']) ?></p>
                         <div class="flex items-center gap-2 mt-1 text-xs text-gray-400">

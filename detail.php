@@ -109,9 +109,9 @@ if ($id) {
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
 
-<main class="max-w-3xl mx-auto px-6 py-16">
+<?php require '_header.php'; ?>
 
-    <a href="index.php" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">← Ma collection</a>
+<main class="max-w-3xl mx-auto px-6 py-12">
 
     <?php if ($error) { ?>
         <p class="text-red-500 text-sm mt-6"><?= $error ?></p>
