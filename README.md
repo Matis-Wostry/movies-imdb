@@ -2,6 +2,12 @@
 
 Application web PHP permettant de rechercher des films, consulter leurs informations et laisser des avis.
 
+## Site en ligne
+
+[movies-imdb.matis-wostry.com](https://movies-imdb.matis-wostry.com)
+
+Le site est déployé automatiquement via CI/CD : chaque push sur la branche `main` déclenche un pipeline GitHub Actions qui synchronise les fichiers sur le serveur et redémarre la stack Docker.
+
 ## Fonctionnalités
 
 - **Recherche de films** — saisie libre ou suggestions prédéfinies, résultats affichés en grille avec affiches
