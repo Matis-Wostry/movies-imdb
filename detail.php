@@ -19,6 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
     }
 }
 
+$reviews = [];
+if ($id) {
+    $stmt = $pdo->prepare('SELECT note, commentaire, created_at FROM reviews WHERE movie_id = ? ORDER BY created_at DESC');
+    $stmt->execute([$id]);
+    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 if ($id) {
     $stmt = $pdo->prepare('SELECT * FROM movies WHERE id = ?');
     $stmt->execute([$id]);
@@ -186,6 +193,30 @@ if ($id) {
                 </button>
             </form>
         </section>
+
+        <?php if (!empty($reviews)) { ?>
+        <section class="mt-12">
+            <h2 class="text-base font-semibold mb-6">Avis (<?= count($reviews) ?>)</h2>
+            <div class="space-y-4">
+                <?php foreach ($reviews as $review) { ?>
+                    <div class="border border-gray-100 rounded-lg px-5 py-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="flex items-center gap-1 text-sm font-medium">
+                                <svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.561-.955L10 0l2.951 5.955 6.561.955-4.756 4.635 1.122 6.545z"/>
+                                </svg>
+                                <?= htmlspecialchars($review['note']) ?> / 10
+                            </span>
+                            <span class="text-xs text-gray-400"><?= htmlspecialchars(substr($review['created_at'], 0, 10)) ?></span>
+                        </div>
+                        <?php if ($review['commentaire']) { ?>
+                            <p class="text-sm text-gray-600 leading-relaxed"><?= htmlspecialchars($review['commentaire']) ?></p>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+            </div>
+        </section>
+        <?php } ?>
 
     <?php } ?>
 
