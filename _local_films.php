@@ -12,7 +12,7 @@ foreach ($localFiles as $file) {
     if (!$ld) { continue; }
 
     preg_match('/"name":"([^"]+)"/', $ld, $m);
-    $title = $m[1] ?? $id;
+    $title = html_entity_decode($m[1] ?? $id, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
     preg_match('/"image":"([^"]+)"/', $ld, $m);
     $image = $m[1] ?? null;

@@ -44,7 +44,7 @@ if ($id) {
 
             if ($ld) {
                 preg_match('/"name":"([^"]+)"/', $ld, $m);
-                $title = $m[1] ?? '';
+                $title = html_entity_decode($m[1] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
                 preg_match('/"image":"([^"]+)"/', $ld, $m);
                 $image = $m[1] ?? '';
