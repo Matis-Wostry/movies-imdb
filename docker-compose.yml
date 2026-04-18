@@ -1,0 +1,34 @@
+services:
+  movies-app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - .:/var/www/html
+    networks:
+      - proxy
+      - internal
+    depends_on:
+      - movies-db
+
+  movies-db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./data/movies_imdb.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - internal
+
+networks:
+  proxy:
+    external: true
+  internal:
+
+volumes:
+  db-data:

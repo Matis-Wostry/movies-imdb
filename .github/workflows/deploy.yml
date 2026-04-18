@@ -1,0 +1,33 @@
+name: Deploy movies-imdb
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 49152 82.65.97.128 >> ~/.ssh/known_hosts
+
+      - name: Rsync files
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.env' \
+            --exclude 'docs' \
+            -e "ssh -p 49152 -i ~/.ssh/id_ed25519" \
+            ./ matis@82.65.97.128:/home/matis/movies-imdb/
+
+      - name: Restart Docker stack
+        run: |
+          ssh -p 49152 -i ~/.ssh/id_ed25519 matis@82.65.97.128 \
+            "cd /home/matis/movies-imdb && docker compose up -d --build"
